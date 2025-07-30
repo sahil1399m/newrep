@@ -6,10 +6,8 @@ import google.generativeai as genai
 # --- Page Config ---
 st.set_page_config(page_title="Sahil Desai | Portfolio", layout="wide", page_icon="💼")
 
-# --- Gemini AI Configuration ---
-genai.configure(api_key="AIzaSyD_VwuOiXSi3k8ACj7lxvHN2h_wn14Wcg0")
+genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 model = genai.GenerativeModel("gemini-1.5-flash")
-
 # --- Load Lottie Animation from URL ---
 def load_lottie_url(url):
     try:
