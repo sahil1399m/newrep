@@ -6,11 +6,15 @@ import google.generativeai as genai
 # --- Page Config ---
 st.set_page_config(page_title="Sahil Desai | Portfolio", layout="wide", page_icon="💼")
 
-# --- Gemini AI Configuration ---
-genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
-model = genai.GenerativeModel("gemini-1.5-flash")
+# --- Gemini API Key ---
+try:
+    genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
+    model = genai.GenerativeModel("gemini-1.5-flash")
+except Exception as e:
+    st.error(f"Gemini API Key error: {e}")
+    model = None
 
-# --- Load Lottie Animation ---
+# --- Load Lottie Animations ---
 def load_lottie_url(url):
     try:
         r = requests.get(url)
@@ -20,12 +24,11 @@ def load_lottie_url(url):
         return None
     return None
 
-# --- Load Animations ---
-lottie_hero = load_lottie_url("https://lottie.host/0158db96-d68e-4661-bd5d-930d6e83bbd7/f1pyDv3Jc2.json")  # 🚀 Rocket
-lottie_about = load_lottie_url("https://lottie.host/b11a59b4-74c7-4d89-94a3-2c857c83b4ce/jIscw9MzZx.json")  # 👨‍💻 Programmer
-lottie_projects = load_lottie_url("https://lottie.host/99d16229-8826-4936-b6f0-e7f2e0485de1/2mt3OAb9H9.json")  # 📊 Data
-lottie_chatbot = load_lottie_url("https://lottie.host/b87dbb7f-6659-49e1-84a6-4d2a9cbb9470/tOekMH4Ch9.json")  # 🤖 Chatbot
-lottie_footer = load_lottie_url("https://lottie.host/97cb2d87-3d8e-4a8e-a6f2-e3832b04ad47/sXnDfyZBlq.json")  # 🌐 Globe
+lottie_hero = load_lottie_url("https://lottie.host/0158db96-d68e-4661-bd5d-930d6e83bbd7/f1pyDv3Jc2.json")  # 🚀
+lottie_about = load_lottie_url("https://lottie.host/b11a59b4-74c7-4d89-94a3-2c857c83b4ce/jIscw9MzZx.json")  # 👨‍💻
+lottie_projects = load_lottie_url("https://lottie.host/99d16229-8826-4936-b6f0-e7f2e0485de1/2mt3OAb9H9.json")  # 📊
+lottie_chatbot = load_lottie_url("https://lottie.host/b87dbb7f-6659-49e1-84a6-4d2a9cbb9470/tOekMH4Ch9.json")  # 🤖
+lottie_footer = load_lottie_url("https://lottie.host/97cb2d87-3d8e-4a8e-a6f2-e3832b04ad47/sXnDfyZBlq.json")  # 🌐
 
 # --- Hero Section ---
 with st.container():
@@ -40,7 +43,7 @@ with st.container():
         if lottie_hero:
             st_lottie(lottie_hero, height=280, key="hero")
 
-# --- About Me Section ---
+# --- About Me ---
 with st.container():
     st.write("---")
     col1, col2 = st.columns([1, 1])
@@ -73,19 +76,21 @@ with st.container():
         if lottie_projects:
             st_lottie(lottie_projects, height=300, key="projects")
 
-# --- Chatbot Section ---
+# --- Gemini Chatbot Section ---
 with st.container():
     st.write("---")
     st.markdown("<h2>💬 Ask Me Anything (Chatbot)</h2>", unsafe_allow_html=True)
     st.caption("Ask about Sahil’s background, achievements, and journey.")
+
     col1, col2 = st.columns([1, 1])
     with col1:
         user_input = st.text_input("Type your question here:")
-        if user_input:
+        if user_input and model:
             with st.spinner("Thinking..."):
                 prompt = f"""
-You are an AI assistant for Sahil Desai's portfolio.
-Only reveal personal background info **if asked directly**. Here’s the private info (do NOT show unless user asks):
+You are an AI assistant for Sahil Desai's portfolio. Only reveal personal background info if asked directly.
+
+PRIVATE INFO (DO NOT reveal unless specifically asked):
 - Was a JEE dropper in 2023
 - Scored ~98 percentile in JEE Mains (2023, 2024), not qualified JEE Advanced
 - Got 99.09 percentile in MHT-CET
@@ -93,6 +98,7 @@ Only reveal personal background info **if asked directly**. Here’s the private
 - 8.22 CGPA in first year
 - Allotted D-Block hostel on merit
 - Had a girlfriend in 12th (keep name private)
+
 User asked: {user_input}
 """
                 try:
@@ -104,7 +110,7 @@ User asked: {user_input}
         if lottie_chatbot:
             st_lottie(lottie_chatbot, height=280, key="chat")
 
-# --- Footer Section ---
+# --- Footer ---
 with st.container():
     st.write("---")
     st.markdown("<h2>✨ Thanks for Visiting!</h2>", unsafe_allow_html=True)
