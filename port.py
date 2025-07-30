@@ -3,14 +3,14 @@ from streamlit_lottie import st_lottie
 import requests
 import google.generativeai as genai
 
-# Page Config
+# --- Page Config ---
 st.set_page_config(page_title="Sahil Desai | Portfolio", layout="wide", page_icon="💼")
 
-# --- Gemini AI Config ---
-genai.configure(api_key="AIzaSyD_VwuOiXSi3k8ACj7lxvHN2h_wn14Wcg0")
-model = genai.GenerativeModel("gemini-pro")
+# --- Gemini AI Configuration ---
+genai.configure(api_key="YOUR_API_KEY_HERE")  # Replace with your real API key
+model = genai.GenerativeModel("gemini-1.5-flash")  # Faster & more reliable for chat
 
-# --- Load Lottie Animation ---
+# --- Load Lottie Animation from URL ---
 def load_lottie_url(url):
     try:
         r = requests.get(url)
@@ -20,14 +20,14 @@ def load_lottie_url(url):
         return None
     return None
 
-# --- Lottie Animations ---
+# --- Lottie URLs ---
 lottie_hero = load_lottie_url("https://lottie.host/4aabcdb6-bb8b-4c10-8983-24e30e8bb2f5/Q6oRbbF7nP.json")
 lottie_about = load_lottie_url("https://lottie.host/0523d100-518b-4ff3-935e-f1be8fdf46a1/lAVJmCQlW1.json")
 lottie_projects = load_lottie_url("https://lottie.host/6079eea3-b2cb-4ac7-b8e1-41d5d192bd69/7DqEfHXbHF.json")
 lottie_chatbot = load_lottie_url("https://lottie.host/b87dbb7f-6659-49e1-84a6-4d2a9cbb9470/tOekMH4Ch9.json")
 lottie_footer = load_lottie_url("https://lottie.host/31c293e2-52f5-48c8-bc9c-1bfc8b716190/yiDXHLoWYb.json")
 
-# --- Header / Hero Section ---
+# --- Hero Section ---
 with st.container():
     col1, col2 = st.columns([1.2, 1])
     with col1:
@@ -38,7 +38,7 @@ with st.container():
         if lottie_hero:
             st_lottie(lottie_hero, height=300, key="hero")
 
-# --- About Section ---
+# --- About Me Section ---
 with st.container():
     st.write("---")
     col1, col2 = st.columns([1, 1])
@@ -97,12 +97,12 @@ User asked: {user_input}
                     response = model.generate_content(prompt)
                     st.success(response.text)
                 except Exception as e:
-                    st.error("❌ AI response failed. Try again.")
+                    st.error(f"❌ AI response failed: {e}")
     with col2:
         if lottie_chatbot:
             st_lottie(lottie_chatbot, height=280, key="chat")
 
-# --- Footer ---
+# --- Footer Section ---
 with st.container():
     st.write("---")
     st.header("✨ Thanks for Visiting!")
