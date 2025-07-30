@@ -7,7 +7,7 @@ import google.generativeai as genai
 st.set_page_config(page_title="Sahil Desai | Portfolio", layout="wide", page_icon="💼")
 
 # --- Gemini AI Configuration ---
-genai.configure(api_key="YOUR_API_KEY_HERE")  # Replace with your real API key
+genai.configure(api_key="AIzaSyD_VwuOiXSi3k8ACj7lxvHN2h_wn14Wcg0")  # Replace with your real API key
 model = genai.GenerativeModel("gemini-1.5-flash")  # Faster & more reliable for chat
 
 # --- Load Lottie Animation from URL ---
