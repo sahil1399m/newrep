@@ -27,9 +27,9 @@ lottie_projects = load_lottie_url("https://lottie.host/6079eea3-b2cb-4ac7-b8e1-4
 lottie_chatbot = load_lottie_url("https://lottie.host/b87dbb7f-6659-49e1-84a6-4d2a9cbb9470/tOekMH4Ch9.json")
 lottie_footer = load_lottie_url("https://lottie.host/31c293e2-52f5-48c8-bc9c-1bfc8b716190/yiDXHLoWYb.json")
 
-# --- CSS Styling ---
-with open("style.css") as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+#  --- CSS Styling ---
+# with open("style.css") as f:
+#     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # --- Hero Section ---
 with st.container():
