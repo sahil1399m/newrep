@@ -6,7 +6,7 @@ import google.generativeai as genai
 # --- Page Config ---
 st.set_page_config(page_title="Sahil Desai | Portfolio", layout="wide", page_icon="💼")
 
-# --- Gemini API Key ---
+# --- Gemini API Key (Do Not Edit This Block) ---
 try:
     genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
     model = genai.GenerativeModel("gemini-1.5-flash")
@@ -14,7 +14,7 @@ except Exception as e:
     st.error(f"Gemini API Key error: {e}")
     model = None
 
-# --- Load Lottie Animations ---
+# --- Lottie Animation Loader ---
 def load_lottie_url(url):
     try:
         r = requests.get(url)
@@ -24,12 +24,12 @@ def load_lottie_url(url):
         return None
     return None
 
-# --- Fresh & Working Animations ---
-lottie_about = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_gnb2nzzr.json")
+# --- Lottie Animations ---
+lottie_hero = load_lottie_url("https://assets10.lottiefiles.com/packages/lf20_touohxv0.json")  # Rocket launch
+lottie_about = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_gnb2nzzr.json")   # Developer
 lottie_projects = load_lottie_url("https://assets5.lottiefiles.com/packages/lf20_u4yrau.json")  # Projects
-lottie_hero = load_lottie_url("https://assets10.lottiefiles.com/packages/lf20_touohxv0.json")
 lottie_chatbot = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_0yfsb3a1.json")  # Chatbot
-lottie_footer = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_3rwasyjy.json")
+lottie_footer = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_3rwasyjy.json")   # Thank you
 
 # --- Hero Section ---
 with st.container():
