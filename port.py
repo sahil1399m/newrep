@@ -3,98 +3,125 @@ from streamlit_lottie import st_lottie
 import requests
 import google.generativeai as genai
 
-# Page setup
-st.set_page_config(page_title="Sahil's Portfolio", page_icon="🧑‍💻", layout="wide")
+# Page Config
+st.set_page_config(page_title="Sahil Desai | Portfolio", layout="wide", page_icon="💼")
 
-# Gemini API key
+# --- Gemini AI Config ---
 genai.configure(api_key="AIzaSyD_VwuOiXSi3k8ACj7lxvHN2h_wn14Wcg0")
 model = genai.GenerativeModel("gemini-pro")
 
-# Function to load Lottie animation
+# --- Load Lottie Animation ---
 def load_lottie_url(url):
     try:
         r = requests.get(url)
         if r.status_code == 200:
             return r.json()
-        else:
-            return None
     except:
         return None
+    return None
 
-# Permanent working Lottie animations
-lottie_coding = load_lottie_url("https://lottie.host/0523d100-518b-4ff3-935e-f1be8fdf46a1/lAVJmCQlW1.json")
-lottie_rocket = load_lottie_url("https://lottie.host/31c293e2-52f5-48c8-bc9c-1bfc8b716190/yiDXHLoWYb.json")
-lottie_chat = load_lottie_url("https://lottie.host/b87dbb7f-6659-49e1-84a6-4d2a9cbb9470/tOekMH4Ch9.json")
+# --- Lottie Animations (safe links) ---
+lottie_hero = load_lottie_url("https://lottie.host/4aabcdb6-bb8b-4c10-8983-24e30e8bb2f5/Q6oRbbF7nP.json")
+lottie_about = load_lottie_url("https://lottie.host/0523d100-518b-4ff3-935e-f1be8fdf46a1/lAVJmCQlW1.json")
+lottie_projects = load_lottie_url("https://lottie.host/6079eea3-b2cb-4ac7-b8e1-41d5d192bd69/7DqEfHXbHF.json")
+lottie_chatbot = load_lottie_url("https://lottie.host/b87dbb7f-6659-49e1-84a6-4d2a9cbb9470/tOekMH4Ch9.json")
+lottie_footer = load_lottie_url("https://lottie.host/31c293e2-52f5-48c8-bc9c-1bfc8b716190/yiDXHLoWYb.json")
 
-# Header
+# --- Header / Hero Section ---
 with st.container():
-    st.title("Hey, I'm Sahil 👋")
-    st.subheader("BTech EXTC Student at VJTI | Passionate about AI, Robotics & Software")
-    st.write("Welcome to my interactive portfolio built with Streamlit!")
+    col1, col2 = st.columns([1.2, 1])
+    with col1:
+        st.title("Hey, I'm Sahil Desai 👋")
+        st.subheader("2nd Year BTech EXTC | VJTI Mumbai")
+        st.write("🚀 Building cool projects with ESP32, OpenCV, Data Science, and AI.")
+    with col2:
+        if lottie_hero:
+            st_lottie(lottie_hero, height=300, key="hero")
 
-# About Section
+# --- About Section ---
 with st.container():
     st.write("---")
-    left_col, right_col = st.columns(2)
-    with left_col:
-        st.header("About Me")
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        st.header("🧠 About Me")
         st.write("""
-        I am an enthusiastic second-year Electronics and Telecommunication Engineering student at VJTI, Mumbai.
-        I love building tech projects with ESP32, OpenCV, and Data Science. I'm aiming for a software internship in my third year.
-        """)
-    with right_col:
-        if lottie_coding:
-            st_lottie(lottie_coding, height=300, key="coding")
+        I’m a passionate tech explorer from VJTI who loves building real-world systems.
+        I’ve worked with ESP32s, created smart AI tools for kids, and made live data monitoring systems using Python + JS.
 
-# Projects Section
+        Currently, I’m improving my DSA, Embedded, and Data Science skills aiming for a software internship in my 3rd year.
+        """)
+    with col2:
+        if lottie_about:
+            st_lottie(lottie_about, height=300, key="about")
+
+# --- Projects Section ---
 with st.container():
     st.write("---")
-    st.header("Projects 💡")
-    st.write("### Here are a few things I've worked on:")
-    st.markdown("- 🤖 **Self-balancing robot** with ESP32 + LVGL")
-    st.markdown("- 🚗 **WiFi-controlled smart car** with live video & servo")
-    st.markdown("- 📈 **Smart distance monitor** with web graph (Chart.js)")
-    st.markdown("- ✋ **OpenCV Kids App** — draws letters via hand & speaks using TTS")
+    st.header("🛠️ Projects")
+    col1, col2 = st.columns([1.2, 1])
+    with col1:
+        st.markdown("- 🤖 **Self-balancing robot** with ESP32 + LVGL UI")
+        st.markdown("- 🚗 **Wi-Fi Controlled Car** with live-streaming & servo")
+        st.markdown("- 📊 **Smart Distance Monitor**: ESP32 + OLED + Chart.js")
+        st.markdown("- ✋ **OpenCV Learning Tool**: Kids draw letters with hand, get voice feedback")
+    with col2:
+        if lottie_projects:
+            st_lottie(lottie_projects, height=300, key="projects")
 
-# Chatbot Section
+# --- Chatbot Section ---
 with st.container():
     st.write("---")
     st.header("💬 Ask Me Anything (Chatbot)")
-    st.write("You can ask me questions about my journey, background, or projects.")
-    if lottie_chat:
-        st_lottie(lottie_chat, height=250, key="chat")
+    st.caption("Ask about Sahil’s background, journey, or achievements.")
 
-    user_input = st.text_input("Ask a question:")
-    if user_input:
-        with st.spinner("Thinking..."):
-            prompt = f"""
-You are an AI assistant for Sahil Desai's portfolio. Only reveal personal info when asked.
-Here’s private info you can use ONLY IF ASKED:
-- JEE dropper in 2023
-- ~98 percentile in JEE Mains (2023 & 2024), but did not qualify JEE Advanced
-- 99.09 percentile in MHT-CET PCM
-- Joined VJTI in 2024 via Defense Quota
-- CGPA: 8.22 in 1st year
-- Got hostel D-block seat on merit
-- Had a girlfriend in 12th (keep her name private)
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        user_input = st.text_input("Type your question here:")
+        if user_input:
+            with st.spinner("Thinking..."):
+                prompt = f"""
+You are a portfolio AI assistant for Sahil Desai. If the user asks personal things, reveal only this:
+- Was a JEE dropper (2023)
+- 98 percentile JEE Mains (2023 & 2024), not qualified JEE Adv
+- 99.09 percentile in CET (PCM)
+- Joined VJTI via Defense Quota in 2024
+- 8.22 CGPA in first year
+- D-Block Hostel on merit
+- Had a girlfriend in 12th (name private)
 
-User asks: {user_input}
+User asked: {user_input}
 """
-            try:
-                response = model.generate_content(prompt)
-                st.markdown(response.text)
-            except Exception as e:
-                st.error("❌ AI failed to respond. Please try again.")
+                try:
+                    response = model.generate_content(prompt)
+                    st.success(response.text)
+                except Exception as e:
+                    st.error("❌ AI failed. Please try again.")
+    with col2:
+        if lottie_chatbot:
+            st_lottie(lottie_chatbot, height=280, key="chat")
 
-# Contact / Footer
+# --- Resume Upload / Download ---
 with st.container():
     st.write("---")
-    st.header("🚀 Let's Connect")
-    st.write("Find me on:")
-    st.markdown("""
-- [LinkedIn](https://www.linkedin.com/in/YOUR_USERNAME)
-- [GitHub](https://github.com/YOUR_USERNAME)
-- [Email](mailto:your_email@example.com)
+    st.header("📄 Resume & Files")
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        uploaded = st.file_uploader("Upload your resume or project file")
+    with col2:
+        with open("Sahil_Resume.pdf", "rb") as file:
+            st.download_button("📥 Download My Resume", file, file_name="Sahil_Desai_Resume.pdf")
+
+# --- Footer ---
+with st.container():
+    st.write("---")
+    st.header("🌐 Connect With Me")
+    col1, col2 = st.columns([1.2, 1])
+    with col1:
+        st.markdown("""
+- 🔗 [LinkedIn](https://www.linkedin.com/in/YOUR_USERNAME)
+- 💻 [GitHub](https://github.com/YOUR_USERNAME)
+- 📧 [Email](mailto:your_email@example.com)
 """)
-    if lottie_rocket:
-        st_lottie(lottie_rocket, height=250, key="rocket")
+    with col2:
+        if lottie_footer:
+            st_lottie(lottie_footer, height=250, key="footer")
