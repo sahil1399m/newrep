@@ -1,4 +1,7 @@
 streamlit
 streamlit-lottie
-google-generativeai
 requests
+google-generativeai
+opencv-python
+Pillow
+numpy
