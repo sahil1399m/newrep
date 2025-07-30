@@ -1,103 +1,90 @@
 import streamlit as st
 from streamlit_lottie import st_lottie
-import requests
 import google.generativeai as genai
+import requests
 
-# Configure API
-genai.configure(api_key="AIzaSyD_VwuOiXSi3k8ACj7lxvHN2h_wn14Wcg0")
+# Configure Google Gemini
+genai.configure(api_key="YOUR_API_KEY_HERE")  # Replace with your real key
 model = genai.GenerativeModel('gemini-1.5-flash')
 
-# Function to load Lottie animation from URL
+# Load Lottie Animation
 def load_lottie_url(url):
     r = requests.get(url)
     if r.status_code != 200:
         return None
     return r.json()
 
-# Load a cool Lottie animation
-lottie_coding = load_lottie_url("https://lottie.host/1c6e71c8-bb42-443e-a387-0523a91f933b/YRTv3RWGlj.json")
+lottie_url = "https://lottie.host/5f15b6c0-9f3e-4b16-8c59-f8b4d4a11ff5/YgK4d7zHGS.json"
+lottie_coding = load_lottie_url(lottie_url)
 
-# ---------------------------
-# Sidebar
-# ---------------------------
-st.sidebar.title("Navigation")
-st.sidebar.markdown("👋 Hello, I'm Sahil Desai")
-st.sidebar.image("pimage.png", width=200)
-st.sidebar.markdown("---")
+# Set page config
+st.set_page_config(page_title="Sahil's Portfolio", page_icon="💡", layout="wide")
 
-# ---------------------------
-# Home
-# ---------------------------
-st.title("🚀 Welcome to Sahil's Portfolio")
+# Hero Section
+with st.container():
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader("Hi there! 👋")
+        st.title("I'm Sahil Desai")
+        st.write("Tech explorer, builder, and a second-year EXTC student at VJTI Mumbai.")
+    with col2:
+        st.image("pimage.png", width=300)
 
-col1, col2 = st.columns(2)
-with col1:
-    st.header("Hey, I'm Sahil Desai 👋")
-    st.write("""
-    - 🎓 Second-Year B.Tech (EXTC) @ VJTI, Mumbai  
-    - 🔬 Tech Explorer | Hardware-Software Enthusiast  
-    - 🎯 Scored 99.09 percentile in MHT-CET (Defense Quota)  
-    - 🧠 8.22 CGPA | D-Block Hostel (Merit-Based)
-    """)
-with col2:
-    st_lottie(lottie_coding, height=300, key="coding")
+# Lottie animation
+with st.container():
+    if lottie_coding:
+        st_lottie(lottie_coding, height=300, key="coding")
+    else:
+        st.warning("⚠️ Animation failed to load.")
 
-# ---------------------------
-# Persona / About Me
-# ---------------------------
-with st.expander("💡 About Me"):
-    persona = """
-    I'm a passionate techie who enjoys blending hardware and software into real-world systems.  
-    Whether it's OpenCV + ESP32, Data Visualization, or building AI tools for kids — I just love creating.  
-    I believe in "learning by building" and am currently sharpening my skills in Data Science, DSA, and Embedded Systems.
+# Persona Description
+persona = """
+I’m Sahil Desai – a tech explorer and hands-on builder, currently in my second year of B.Tech (EXTC) at VJTI, Mumbai.
 
-    ▶ I gave JEE Mains twice (~98 percentile), missed Advanced but bounced back with 99.09% in MHT-CET.  
-    ▶ Got into VJTI through Defense quota (2024), earned 8.22 CGPA in 1st year & was allotted D-Block hostel.
+🔧 I love turning creative tech ideas into real-world projects—from OpenCV + ESP32 setups to interactive AI tools for kids, smart monitoring systems, and much more.
 
-    ✨ Calm, collaborative, creative — and always curious to try something new!
-    """
-    st.markdown(persona)
+📚 I'm sharpening my skills in Data Science, Embedded Systems, and DSA, gearing up for a software internship in my third year.
 
-# ---------------------------
-# ChatBot
-# ---------------------------
-st.subheader("🤖 Ask Me Anything")
-user_input = st.text_input("Type your question about me...")
-if st.button("Submit"):
-    prompt = persona + user_input
+🛠️ I'm always experimenting—LVGL for UI, Python for automation, Chart.js for visualization, you name it.
+
+💡 I believe in learning by building and staying calm under pressure. Whether it’s a lab assignment or self-driven innovation, I bring energy, clarity, and adaptability to every task.
+
+🎓 Backstory:
+- Dropped for JEE in 2023.
+- Appeared for JEE Mains in 2023 & 2024 (Scored ~98 percentile).
+- Didn't qualify for JEE Advanced.
+- Scored 99.09 percentile in MHT-CET (PCM).
+- Got admission in VJTI via Defense quota (2024).
+- CGPA: 8.22 in First Year.
+- Allotted hostel in D-Block on merit.
+- Had a girlfriend in 12th (Name private 😉).
+"""
+
+# AI Chatbot Section
+st.divider()
+st.title("🤖 Ask Sahil's AI Chatbot")
+st.markdown("Ask anything about my journey, skills, or background.")
+
+user = st.text_input("Type your question here:")
+
+if st.button("Submit", use_container_width=True):
+    prompt = persona + "\nUser Question: " + user
     response = model.generate_content(prompt)
-    st.success(response.text)
+    st.write(response.text)
 
-# ---------------------------
-# Skills
-# ---------------------------
-st.subheader("🧰 My Skills")
-st.slider("Python", 0, 100, 80)
-st.slider("Embedded Systems", 0, 100, 70)
-st.slider("OpenCV", 0, 100, 65)
-st.slider("Data Science", 0, 100, 60)
-st.slider("DSA", 0, 100, 70)
+# Skills Section
+st.divider()
+st.title("💼 My Skills")
+st.slider("Python", 0, 100, 85)
+st.slider("Embedded Systems", 0, 100, 75)
+st.slider("Data Science", 0, 100, 65)
+st.slider("OpenCV & Computer Vision", 0, 100, 80)
 
-# ---------------------------
-# File Upload
-# ---------------------------
-st.subheader("📁 Upload Your File")
-st.file_uploader("Choose a file")
+# Upload Section
+st.divider()
+st.title("📁 File Uploader")
+st.file_uploader("Upload your resume, project files, etc.")
 
-# ---------------------------
-# Contact
-# ---------------------------
-st.markdown("---")
-st.subheader("📬 Contact Me")
-with st.form("contact_form"):
-    name = st.text_input("Your Name")
-    email = st.text_input("Your Email")
-    message = st.text_area("Message")
-    if st.form_submit_button("Send"):
-        st.success("Thanks! Your message has been sent.")
-
-# ---------------------------
 # Footer
-# ---------------------------
-st.markdown("---")
-st.markdown("Made with ❤️ by Sahil Desai | [LinkedIn](https://linkedin.com) | [GitHub](https://github.com)")
+st.divider()
+st.caption("Built with ❤️ using Streamlit | © Sahil Desai 2025")
