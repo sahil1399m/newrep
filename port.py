@@ -6,9 +6,34 @@ import google.generativeai as genai
 # --- Page Config ---
 st.set_page_config(page_title="Sahil Desai | Portfolio", layout="wide", page_icon="💼")
 
+# --- Custom CSS for Styling ---
+st.markdown("""
+    <style>
+    .section {
+        padding: 3rem 1rem;
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        box-shadow: 0 0 15px rgba(0,0,0,0.05);
+    }
+    .hero { background-color: #E3F2FD; }
+    .about { background-color: #E8F5E9; }
+    .projects { background-color: #FFF3E0; }
+    .chat { background-color: #F3E5F5; }
+    .footer { background-color: #ECEFF1; text-align: center; }
+    .block:hover {
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        transform: scale(1.02);
+        transition: 0.3s ease-in-out;
+        padding: 8px;
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # --- Gemini AI Configuration ---
-genai.configure(api_key="AIzaSyD_VwuOiXSi3k8ACj7lxvHN2h_wn14Wcg0")  # Replace with your real API key
-model = genai.GenerativeModel("gemini-1.5-flash")  # Faster & more reliable for chat
+genai.configure(api_key="AIzaSyD_VwuOiXSi3k8ACj7lxvHN2h_wn14Wcg0")  # Replace with your actual key
+model = genai.GenerativeModel("gemini-1.5-flash")
 
 # --- Load Lottie Animation from URL ---
 def load_lottie_url(url):
@@ -29,6 +54,7 @@ lottie_footer = load_lottie_url("https://lottie.host/31c293e2-52f5-48c8-bc9c-1bf
 
 # --- Hero Section ---
 with st.container():
+    st.markdown('<div class="section hero">', unsafe_allow_html=True)
     col1, col2 = st.columns([1.2, 1])
     with col1:
         st.title("Hey, I'm Sahil Desai 👋")
@@ -37,43 +63,45 @@ with st.container():
     with col2:
         if lottie_hero:
             st_lottie(lottie_hero, height=300, key="hero")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # --- About Me Section ---
 with st.container():
-    st.write("---")
+    st.markdown('<div class="section about">', unsafe_allow_html=True)
     col1, col2 = st.columns([1, 1])
     with col1:
         st.header("🧠 About Me")
         st.write("""
         I'm a tech enthusiast passionate about building real-world solutions with Embedded Systems and Python.  
         From robotics to OpenCV to data visualizations on the web, I love to blend creativity and code.
-        
+
         Currently learning DSA and Data Science to prepare for software internships.
         """)
     with col2:
         if lottie_about:
             st_lottie(lottie_about, height=300, key="about")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # --- Projects Section ---
 with st.container():
-    st.write("---")
+    st.markdown('<div class="section projects">', unsafe_allow_html=True)
     st.header("🛠️ Projects")
     col1, col2 = st.columns([1.2, 1])
     with col1:
-        st.markdown("- 🤖 **Self-balancing Robot** using ESP32 and MPU6050")
-        st.markdown("- 🚗 **Wi-Fi Controlled Car** with ESP32 and live camera")
-        st.markdown("- 📊 **Smart Distance Monitoring** system with OLED + Chart.js")
-        st.markdown("- ✋ **Handwriting Recognition for Kids** using OpenCV + Voice")
+        st.markdown('<div class="block">- 🤖 **Self-balancing Robot** using ESP32 and MPU6050</div>', unsafe_allow_html=True)
+        st.markdown('<div class="block">- 🚗 **Wi-Fi Controlled Car** with ESP32 and live camera</div>', unsafe_allow_html=True)
+        st.markdown('<div class="block">- 📊 **Smart Distance Monitoring** system with OLED + Chart.js</div>', unsafe_allow_html=True)
+        st.markdown('<div class="block">- ✋ **Handwriting Recognition for Kids** using OpenCV + Voice</div>', unsafe_allow_html=True)
     with col2:
         if lottie_projects:
             st_lottie(lottie_projects, height=300, key="projects")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # --- Chatbot Section ---
 with st.container():
-    st.write("---")
+    st.markdown('<div class="section chat">', unsafe_allow_html=True)
     st.header("💬 Ask Me Anything (Chatbot)")
     st.caption("Ask about Sahil’s background, achievements, and journey.")
-
     col1, col2 = st.columns([1, 1])
     with col1:
         user_input = st.text_input("Type your question here:")
@@ -101,11 +129,13 @@ User asked: {user_input}
     with col2:
         if lottie_chatbot:
             st_lottie(lottie_chatbot, height=280, key="chat")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # --- Footer Section ---
 with st.container():
-    st.write("---")
+    st.markdown('<div class="section footer">', unsafe_allow_html=True)
     st.header("✨ Thanks for Visiting!")
     st.write("This portfolio is built with Python, Streamlit, and love for innovation.")
     if lottie_footer:
-        st_lottie(lottie_footer, height=200, key="footer") 
+        st_lottie(lottie_footer, height=200, key="footer")
+    st.markdown('</div>', unsafe_allow_html=True)
