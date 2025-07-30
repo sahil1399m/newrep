@@ -27,7 +27,7 @@ def load_lottie_url(url):
 # --- Lottie Animations ---
 lottie_hero = load_lottie_url("https://assets10.lottiefiles.com/packages/lf20_touohxv0.json")  # Rocket launch
 lottie_about = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_gnb2nzzr.json")   # Developer
-lottie_projects = load_lottie_url("https://assets.lottiefiles.com/packages/lf20_jCpnQK.json")  # Projects
+lottie_projects = load_lottie_url("https://assets10.lottiefiles.com/packages/lf20_t0U27CsQcj.json")  # Projects
 lottie_chatbot = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_0yfsb3a1.json")  # Chatbot
 lottie_footer = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_3rwasyjy.json")   # Thank you
 
@@ -116,4 +116,4 @@ with st.container():
     st.markdown("<h2>✨ Thanks for Visiting!</h2>", unsafe_allow_html=True)
     st.write("This portfolio is built with Python, Streamlit, and love for innovation.")
     if lottie_projects:
-        st_lottie(lottie_projects, height=200, key="footer")
+        st_lottie(lottie_projects, height=200, key="projects")
