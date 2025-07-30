@@ -3,25 +3,27 @@ from streamlit_lottie import st_lottie
 import requests
 import google.generativeai as genai
 
-# Page Configuration
+# Page setup
 st.set_page_config(page_title="Sahil's Portfolio", page_icon="🧑‍💻", layout="wide")
 
-# Google Gemini API Key
+# Gemini API key
 genai.configure(api_key="AIzaSyD_VwuOiXSi3k8ACj7lxvHN2h_wn14Wcg0")
 model = genai.GenerativeModel("gemini-pro")
 
-# Function to load Lottie animations
+# Function to load Lottie animation
 def load_lottie_url(url):
     try:
         r = requests.get(url)
         if r.status_code == 200:
             return r.json()
+        else:
+            return None
     except:
         return None
 
-# Load Animations
-lottie_coding = load_lottie_url("https://lottie.host/4aabcdb6-bb8b-4c10-8983-24e30e8bb2f5/Q6oRbbF7nP.json")
-lottie_rocket = load_lottie_url("https://lottie.host/1ab9603f-4b3d-481e-bfa9-12fdc6a32d4b/5kVrZ0UBVm.json")
+# Permanent working Lottie animations
+lottie_coding = load_lottie_url("https://lottie.host/0523d100-518b-4ff3-935e-f1be8fdf46a1/lAVJmCQlW1.json")
+lottie_rocket = load_lottie_url("https://lottie.host/31c293e2-52f5-48c8-bc9c-1bfc8b716190/yiDXHLoWYb.json")
 lottie_chat = load_lottie_url("https://lottie.host/b87dbb7f-6659-49e1-84a6-4d2a9cbb9470/tOekMH4Ch9.json")
 
 # Header
@@ -41,9 +43,10 @@ with st.container():
         I love building tech projects with ESP32, OpenCV, and Data Science. I'm aiming for a software internship in my third year.
         """)
     with right_col:
-        st_lottie(lottie_coding, height=300, key="coding")
+        if lottie_coding:
+            st_lottie(lottie_coding, height=300, key="coding")
 
-# Projects
+# Projects Section
 with st.container():
     st.write("---")
     st.header("Projects 💡")
@@ -53,12 +56,13 @@ with st.container():
     st.markdown("- 📈 **Smart distance monitor** with web graph (Chart.js)")
     st.markdown("- ✋ **OpenCV Kids App** — draws letters via hand & speaks using TTS")
 
-# AI Chatbot Section
+# Chatbot Section
 with st.container():
     st.write("---")
     st.header("💬 Ask Me Anything (Chatbot)")
     st.write("You can ask me questions about my journey, background, or projects.")
-    st_lottie(lottie_chat, height=250, key="chat")
+    if lottie_chat:
+        st_lottie(lottie_chat, height=250, key="chat")
 
     user_input = st.text_input("Ask a question:")
     if user_input:
@@ -82,7 +86,7 @@ User asks: {user_input}
             except Exception as e:
                 st.error("❌ AI failed to respond. Please try again.")
 
-# Footer
+# Contact / Footer
 with st.container():
     st.write("---")
     st.header("🚀 Let's Connect")
@@ -92,5 +96,5 @@ with st.container():
 - [GitHub](https://github.com/YOUR_USERNAME)
 - [Email](mailto:your_email@example.com)
 """)
-    st_lottie(lottie_rocket, height=250, key="rocket")
-
+    if lottie_rocket:
+        st_lottie(lottie_rocket, height=250, key="rocket")
