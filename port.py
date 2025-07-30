@@ -41,8 +41,8 @@ with st.container():
         <p style='font-size:18px;'>🚀 Exploring Embedded Systems, Data Science, and AI.</p>
         """, unsafe_allow_html=True)
     with col2:
-        if lottie_hero:
-            st_lottie(lottie_hero, height=280, key="hero")
+        if lottie_about:
+            st_lottie(lottie_about, height=280, key="hero")
 
 # --- About Me ---
 with st.container():
@@ -56,8 +56,8 @@ with st.container():
         <p style='font-size:17px;'>Currently learning DSA and Data Science to prepare for software internships.</p>
         """, unsafe_allow_html=True)
     with col2:
-        if lottie_about:
-            st_lottie(lottie_about, height=280, key="about")
+        if lottie_hero:
+            st_lottie(lottie_hero, height=280, key="about")
 
 # --- Projects Section ---
 with st.container():
