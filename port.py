@@ -57,7 +57,7 @@ with st.container():
         """, unsafe_allow_html=True)
     with col2:
         if lottie_about:
-            st_lottie(lottie_about, height=280, key="about")
+            st_lottie(lottie_hero, height=280, key="hero")
 
 # --- Projects Section ---
 with st.container():
