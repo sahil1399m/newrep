@@ -2,13 +2,16 @@ import streamlit as st
 from streamlit_lottie import st_lottie
 import requests
 import google.generativeai as genai
+from PIL import Image
+import numpy as np
+import cv2
 
 # --- Page Config ---
 st.set_page_config(page_title="Sahil Desai | Portfolio", layout="wide", page_icon="💼")
 
 # --- Gemini AI Configuration ---
 genai.configure(api_key="AIzaSyD_VwuOiXSi3k8ACj7lxvHN2h_wn14Wcg0")  # Replace with your real API key
-model = genai.GenerativeModel("gemini-1.5-flash")  # Faster & more reliable for chat
+model = genai.GenerativeModel("gemini-1.5-flash")
 
 # --- Load Lottie Animation from URL ---
 def load_lottie_url(url):
@@ -47,7 +50,7 @@ with st.container():
         st.write("""
         I'm a tech enthusiast passionate about building real-world solutions with Embedded Systems and Python.  
         From robotics to OpenCV to data visualizations on the web, I love to blend creativity and code.
-        
+
         Currently learning DSA and Data Science to prepare for software internships.
         """)
     with col2:
@@ -67,6 +70,25 @@ with st.container():
     with col2:
         if lottie_projects:
             st_lottie(lottie_projects, height=300, key="projects")
+
+# --- 📸 Camera Input Section ---
+with st.container():
+    st.write("---")
+    st.header("📸 Try My Camera Feature!")
+    st.caption("Take a photo using your device camera (for demo, testing, or future vision features).")
+
+    img_data = st.camera_input("Click a picture to see magic!")
+
+    if img_data:
+        st.success("✅ Photo captured successfully!")
+        st.image(img_data, caption="Your captured photo", use_column_width=True)
+
+        # Optional: Convert to grayscale using OpenCV
+        image = Image.open(img_data)
+        img_array = np.array(image)
+        gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
+
+        st.image(gray, caption="🧠 Grayscale Version", channels="GRAY")
 
 # --- Chatbot Section ---
 with st.container():
