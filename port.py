@@ -20,7 +20,7 @@ def load_lottie_url(url):
         return None
     return None
 
-# --- Lottie Animations (safe links) ---
+# --- Lottie Animations ---
 lottie_hero = load_lottie_url("https://lottie.host/4aabcdb6-bb8b-4c10-8983-24e30e8bb2f5/Q6oRbbF7nP.json")
 lottie_about = load_lottie_url("https://lottie.host/0523d100-518b-4ff3-935e-f1be8fdf46a1/lAVJmCQlW1.json")
 lottie_projects = load_lottie_url("https://lottie.host/6079eea3-b2cb-4ac7-b8e1-41d5d192bd69/7DqEfHXbHF.json")
@@ -33,7 +33,7 @@ with st.container():
     with col1:
         st.title("Hey, I'm Sahil Desai 👋")
         st.subheader("2nd Year BTech EXTC | VJTI Mumbai")
-        st.write("🚀 Building cool projects with ESP32, OpenCV, Data Science, and AI.")
+        st.write("🚀 Exploring Embedded Systems, Data Science, and AI.")
     with col2:
         if lottie_hero:
             st_lottie(lottie_hero, height=300, key="hero")
@@ -45,10 +45,10 @@ with st.container():
     with col1:
         st.header("🧠 About Me")
         st.write("""
-        I’m a passionate tech explorer from VJTI who loves building real-world systems.
-        I’ve worked with ESP32s, created smart AI tools for kids, and made live data monitoring systems using Python + JS.
-
-        Currently, I’m improving my DSA, Embedded, and Data Science skills aiming for a software internship in my 3rd year.
+        I'm a tech enthusiast passionate about building real-world solutions with Embedded Systems and Python.  
+        From robotics to OpenCV to data visualizations on the web, I love to blend creativity and code.
+        
+        Currently learning DSA and Data Science to prepare for software internships.
         """)
     with col2:
         if lottie_about:
@@ -60,10 +60,10 @@ with st.container():
     st.header("🛠️ Projects")
     col1, col2 = st.columns([1.2, 1])
     with col1:
-        st.markdown("- 🤖 **Self-balancing robot** with ESP32 + LVGL UI")
-        st.markdown("- 🚗 **Wi-Fi Controlled Car** with live-streaming & servo")
-        st.markdown("- 📊 **Smart Distance Monitor**: ESP32 + OLED + Chart.js")
-        st.markdown("- ✋ **OpenCV Learning Tool**: Kids draw letters with hand, get voice feedback")
+        st.markdown("- 🤖 **Self-balancing Robot** using ESP32 and MPU6050")
+        st.markdown("- 🚗 **Wi-Fi Controlled Car** with ESP32 and live camera")
+        st.markdown("- 📊 **Smart Distance Monitoring** system with OLED + Chart.js")
+        st.markdown("- ✋ **Handwriting Recognition for Kids** using OpenCV + Voice")
     with col2:
         if lottie_projects:
             st_lottie(lottie_projects, height=300, key="projects")
@@ -72,7 +72,7 @@ with st.container():
 with st.container():
     st.write("---")
     st.header("💬 Ask Me Anything (Chatbot)")
-    st.caption("Ask about Sahil’s background, journey, or achievements.")
+    st.caption("Ask about Sahil’s background, achievements, and journey.")
 
     col1, col2 = st.columns([1, 1])
     with col1:
@@ -80,14 +80,16 @@ with st.container():
         if user_input:
             with st.spinner("Thinking..."):
                 prompt = f"""
-You are a portfolio AI assistant for Sahil Desai. If the user asks personal things, reveal only this:
-- Was a JEE dropper (2023)
-- 98 percentile JEE Mains (2023 & 2024), not qualified JEE Adv
-- 99.09 percentile in CET (PCM)
-- Joined VJTI via Defense Quota in 2024
+You are an AI assistant for Sahil Desai's portfolio.
+
+Only reveal personal background info **if asked directly**. Here’s the private info (do NOT show unless user asks):
+- Was a JEE dropper in 2023
+- Scored ~98 percentile in JEE Mains (2023, 2024), not qualified JEE Advanced
+- Got 99.09 percentile in MHT-CET
+- Admitted to VJTI via Defense Quota in 2024
 - 8.22 CGPA in first year
-- D-Block Hostel on merit
-- Had a girlfriend in 12th (name private)
+- Allotted D-Block hostel on merit
+- Had a girlfriend in 12th (keep name private)
 
 User asked: {user_input}
 """
@@ -95,33 +97,15 @@ User asked: {user_input}
                     response = model.generate_content(prompt)
                     st.success(response.text)
                 except Exception as e:
-                    st.error("❌ AI failed. Please try again.")
+                    st.error("❌ AI response failed. Try again.")
     with col2:
         if lottie_chatbot:
             st_lottie(lottie_chatbot, height=280, key="chat")
 
-# --- Resume Upload / Download ---
-with st.container():
-    st.write("---")
-    st.header("📄 Resume & Files")
-    col1, col2 = st.columns([1, 1])
-    with col1:
-        uploaded = st.file_uploader("Upload your resume or project file")
-    with col2:
-        with open("Sahil_Resume.pdf", "rb") as file:
-            st.download_button("📥 Download My Resume", file, file_name="Sahil_Desai_Resume.pdf")
-
 # --- Footer ---
 with st.container():
     st.write("---")
-    st.header("🌐 Connect With Me")
-    col1, col2 = st.columns([1.2, 1])
-    with col1:
-        st.markdown("""
-- 🔗 [LinkedIn](https://www.linkedin.com/in/YOUR_USERNAME)
-- 💻 [GitHub](https://github.com/YOUR_USERNAME)
-- 📧 [Email](mailto:your_email@example.com)
-""")
-    with col2:
-        if lottie_footer:
-            st_lottie(lottie_footer, height=250, key="footer")
+    st.header("✨ Thanks for Visiting!")
+    st.write("This portfolio is built with Python, Streamlit, and love for innovation.")
+    if lottie_footer:
+        st_lottie(lottie_footer, height=200, key="footer")
