@@ -26,13 +26,11 @@ def load_lottie_url(url):
 
 # --- Lottie Animations ---
 lottie_hero = load_lottie_url("https://assets10.lottiefiles.com/packages/lf20_touohxv0.json")  # Rocket launch
-lottie_about = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_3rwasyjy.json")   # Developer
-lottie_projects = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_gnb2nzzr.json")  # Projects
+lottie_about = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_gnb2nzzr.json")   # Developer
+lottie_projects = load_lottie_url("https://assets5.lottiefiles.com/packages/lf20_u4yrau.json")  # Projects
 lottie_chatbot = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_0yfsb3a1.json")  # Chatbot
-lottie_footer = load_lottie_url("https://assets5.lottiefiles.com/packages/lf20_u4yrau.json")   # Thank you
+lottie_footer = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_3rwasyjy.json")   # Thank you
 
-
-load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_gnb2nzzr.json")
 # --- Hero Section ---
 with st.container():
     col1, col2 = st.columns([1.5, 1])
@@ -43,8 +41,8 @@ with st.container():
         <p style='font-size:18px;'>🚀 Exploring Embedded Systems, Data Science, and AI.</p>
         """, unsafe_allow_html=True)
     with col2:
-        if lottie_about:
-            st_lottie(lottie_about, height=280, key="hero")
+        if lottie_hero:
+            st_lottie(lottie_hero, height=280, key="hero")
 
 # --- About Me ---
 with st.container():
@@ -58,8 +56,8 @@ with st.container():
         <p style='font-size:17px;'>Currently learning DSA and Data Science to prepare for software internships.</p>
         """, unsafe_allow_html=True)
     with col2:
-        if lottie_hero:
-            st_lottie(lottie_hero, height=280, key="hero")
+        if lottie_about:
+            st_lottie(lottie_about, height=280, key="about")
 
 # --- Projects Section ---
 with st.container():
@@ -76,8 +74,8 @@ with st.container():
         </ul>
         """, unsafe_allow_html=True)
     with col2:
-        if lottie_projects:
-            st_lottie(lottie_projects, height=300, key="projects")
+        if lottie_footer:
+            st_lottie(lottie_footer, height=300, key="projects")
 
 # --- Gemini Chatbot Section ---
 with st.container():
@@ -117,5 +115,5 @@ with st.container():
     st.write("---")
     st.markdown("<h2>✨ Thanks for Visiting!</h2>", unsafe_allow_html=True)
     st.write("This portfolio is built with Python, Streamlit, and love for innovation.")
-    if lottie_footer:
-        st_lottie(lottie_footer, height=200, key="footer")
+    if lottie_projects:
+        st_lottie(lottie_projects, height=200, key="footer")
