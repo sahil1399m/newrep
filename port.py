@@ -4,7 +4,7 @@ import requests
 import google.generativeai as genai
 
 # Configure Gemini
-genai.configure(api_key="YOUR_API_KEY_HERE")  # Replace with valid Gemini API key
+genai.configure(api_key="AIzaSyD_VwuOiXSi3k8ACj7lxvHN2h_wn14Wcg0")  # Replace with valid Gemini API key
 model = genai.GenerativeModel("gemini-1.5-flash")
 
 # Load Lottie animation from a URL
