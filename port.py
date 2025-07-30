@@ -14,7 +14,7 @@ def load_lottie_url(url):
         return None
     return r.json()
 
-lottie_url = "https://lottie.host/5f15b6c0-9f3e-4b16-8c59-f8b4d4a11ff5/YgK4d7zHGS.json"
+lottie_url = "https://assets10.lottiefiles.com/packages/lf20_jtbfg2nb.json"
 lottie_coding = load_lottie_url(lottie_url)
 
 # Set page config
