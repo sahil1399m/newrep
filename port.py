@@ -25,7 +25,7 @@ def load_lottie_url(url):
     return None
 
 # --- Fresh & Working Animations ---
-lottie_hero = load_lottie_url("https://lottie.host/1a7e223d-c99c-419d-8784-c027a6a5d028/g03ecgFwvT.json")
+lottie_hero = load_lottie_url("https://assets10.lottiefiles.com/packages/lf20_touohxv0.json")
 lottie_about = load_lottie_url("https://lottie.host/7d85ad9d-0f87-4a5f-bbba-c6e3bb9cfad1/MI9bMSxZkY.json")
 lottie_projects = load_lottie_url("https://lottie.host/7d41e8e4-8c2e-4be7-b245-3ef1348012e2/c2AoWgMoKJ.json")
 lottie_chatbot = load_lottie_url("https://lottie.host/e3d5c0ef-fc40-47c2-a24e-75dc9b828d38/K4ciDFcgrq.json")
