@@ -15,20 +15,27 @@ except Exception as e:
     model = None
 
 # --- Load Lottie Animations ---
-def load_lottie_url(url):
+@st.cache_data(show_spinner=False)
+def load_lottie_url(url: str):
     try:
         r = requests.get(url)
         if r.status_code == 200:
             return r.json()
-    except:
-        return None
+    except requests.exceptions.RequestException:
+        pass
     return None
 
-lottie_hero = load_lottie_url("https://lottie.host/0158db96-d68e-4661-bd5d-930d6e83bbd7/f1pyDv3Jc2.json")  # 🚀
-lottie_about = load_lottie_url("https://lottie.host/b11a59b4-74c7-4d89-94a3-2c857c83b4ce/jIscw9MzZx.json")  # 👨‍💻
-lottie_projects = load_lottie_url("https://lottie.host/99d16229-8826-4936-b6f0-e7f2e0485de1/2mt3OAb9H9.json")  # 📊
-lottie_chatbot = load_lottie_url("https://lottie.host/b87dbb7f-6659-49e1-84a6-4d2a9cbb9470/tOekMH4Ch9.json")  # 🤖
-lottie_footer = load_lottie_url("https://lottie.host/97cb2d87-3d8e-4a8e-a6f2-e3832b04ad47/sXnDfyZBlq.json")  # 🌐
+# --- Lottie URLs ---
+lottie_urls = {
+    "hero": "https://lottie.host/0158db96-d68e-4661-bd5d-930d6e83bbd7/f1pyDv3Jc2.json",
+    "about": "https://lottie.host/b11a59b4-74c7-4d89-94a3-2c857c83b4ce/jIscw9MzZx.json",
+    "projects": "https://lottie.host/99d16229-8826-4936-b6f0-e7f2e0485de1/2mt3OAb9H9.json",
+    "chatbot": "https://lottie.host/b87dbb7f-6659-49e1-84a6-4d2a9cbb9470/tOekMH4Ch9.json",
+    "footer": "https://lottie.host/97cb2d87-3d8e-4a8e-a6f2-e3832b04ad47/sXnDfyZBlq.json"
+}
+
+# Load animations
+animations = {key: load_lottie_url(url) for key, url in lottie_urls.items()}
 
 # --- Hero Section ---
 with st.container():
@@ -40,8 +47,10 @@ with st.container():
         <p style='font-size:18px;'>🚀 Exploring Embedded Systems, Data Science, and AI.</p>
         """, unsafe_allow_html=True)
     with col2:
-        if lottie_hero:
-            st_lottie(lottie_hero, height=280, key="hero")
+        if animations["hero"]:
+            st_lottie(animations["hero"], height=280, key="hero")
+        else:
+            st.error("⚠️ Hero animation failed to load.")
 
 # --- About Me ---
 with st.container():
@@ -55,8 +64,10 @@ with st.container():
         <p style='font-size:17px;'>Currently learning DSA and Data Science to prepare for software internships.</p>
         """, unsafe_allow_html=True)
     with col2:
-        if lottie_about:
-            st_lottie(lottie_about, height=280, key="about")
+        if animations["about"]:
+            st_lottie(animations["about"], height=280, key="about")
+        else:
+            st.error("⚠️ About animation failed to load.")
 
 # --- Projects Section ---
 with st.container():
@@ -73,8 +84,10 @@ with st.container():
         </ul>
         """, unsafe_allow_html=True)
     with col2:
-        if lottie_projects:
-            st_lottie(lottie_projects, height=300, key="projects")
+        if animations["projects"]:
+            st_lottie(animations["projects"], height=300, key="projects")
+        else:
+            st.error("⚠️ Projects animation failed to load.")
 
 # --- Gemini Chatbot Section ---
 with st.container():
@@ -107,13 +120,17 @@ User asked: {user_input}
                 except Exception as e:
                     st.error(f"❌ AI response failed: {e}")
     with col2:
-        if lottie_chatbot:
-            st_lottie(lottie_chatbot, height=280, key="chat")
+        if animations["chatbot"]:
+            st_lottie(animations["chatbot"], height=280, key="chat")
+        else:
+            st.error("⚠️ Chatbot animation failed to load.")
 
 # --- Footer ---
 with st.container():
     st.write("---")
     st.markdown("<h2>✨ Thanks for Visiting!</h2>", unsafe_allow_html=True)
     st.write("This portfolio is built with Python, Streamlit, and love for innovation.")
-    if lottie_footer:
-        st_lottie(lottie_footer, height=200, key="footer")
+    if animations["footer"]:
+        st_lottie(animations["footer"], height=200, key="footer")
+    else:
+        st.error("⚠️ Footer animation failed to load.")
