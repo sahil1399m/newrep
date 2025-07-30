@@ -38,8 +38,11 @@ with st.container():
         <h3 style='margin-top:-15px;'>2nd Year BTech EXTC | VJTI Mumbai</h3>
         <p style='font-size:18px;'>🚀 Exploring Embedded Systems, Data Science, and AI.</p>
         """, unsafe_allow_html=True)
+        lottie_hero = load_lottie_url("https://lottie.host/4aabcdb6-bb8b-4c10-8983-24e30e8bb2f5/Q6oRbbF7nP.json")
+        lottie_chatbot = load_lottie_url("https://lottie.host/b87dbb7f-6659-49e1-84a6-4d2a9cbb9470/tOekMH4Ch9.json")
     with col2:
         if lottie_hero:
+            lottie_rocket = load_lottie_url("https://lottie.host/0158db96-d68e-4661-bd5d-930d6e83bbd7/f1pyDv3Jc2.json")
             st_lottie(lottie_hero, height=300, key="hero")
 
 # --- About Me Section ---
