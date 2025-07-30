@@ -15,27 +15,21 @@ except Exception as e:
     model = None
 
 # --- Load Lottie Animations ---
-@st.cache_data(show_spinner=False)
-def load_lottie_url(url: str):
+def load_lottie_url(url):
     try:
         r = requests.get(url)
         if r.status_code == 200:
             return r.json()
-    except requests.exceptions.RequestException:
-        pass
+    except:
+        return None
     return None
 
-# --- Lottie URLs ---
-lottie_urls = {
-    "hero": "https://lottie.host/0158db96-d68e-4661-bd5d-930d6e83bbd7/f1pyDv3Jc2.json",
-    "about": "https://lottie.host/b11a59b4-74c7-4d89-94a3-2c857c83b4ce/jIscw9MzZx.json",
-    "projects": "https://lottie.host/99d16229-8826-4936-b6f0-e7f2e0485de1/2mt3OAb9H9.json",
-    "chatbot": "https://lottie.host/b87dbb7f-6659-49e1-84a6-4d2a9cbb9470/tOekMH4Ch9.json",
-    "footer": "https://lottie.host/97cb2d87-3d8e-4a8e-a6f2-e3832b04ad47/sXnDfyZBlq.json"
-}
-
-# Load animations
-animations = {key: load_lottie_url(url) for key, url in lottie_urls.items()}
+# --- Fresh & Working Animations ---
+lottie_hero = load_lottie_url("https://lottie.host/1a7e223d-c99c-419d-8784-c027a6a5d028/g03ecgFwvT.json")
+lottie_about = load_lottie_url("https://lottie.host/7d85ad9d-0f87-4a5f-bbba-c6e3bb9cfad1/MI9bMSxZkY.json")
+lottie_projects = load_lottie_url("https://lottie.host/7d41e8e4-8c2e-4be7-b245-3ef1348012e2/c2AoWgMoKJ.json")
+lottie_chatbot = load_lottie_url("https://lottie.host/e3d5c0ef-fc40-47c2-a24e-75dc9b828d38/K4ciDFcgrq.json")
+lottie_footer = load_lottie_url("https://lottie.host/0ab8ad65-f2ea-4df8-b6d3-197b9699be3e/MkMxF9rOji.json")
 
 # --- Hero Section ---
 with st.container():
@@ -47,10 +41,8 @@ with st.container():
         <p style='font-size:18px;'>🚀 Exploring Embedded Systems, Data Science, and AI.</p>
         """, unsafe_allow_html=True)
     with col2:
-        if animations["hero"]:
-            st_lottie(animations["hero"], height=280, key="hero")
-        else:
-            st.error("⚠️ Hero animation failed to load.")
+        if lottie_hero:
+            st_lottie(lottie_hero, height=280, key="hero")
 
 # --- About Me ---
 with st.container():
@@ -64,10 +56,8 @@ with st.container():
         <p style='font-size:17px;'>Currently learning DSA and Data Science to prepare for software internships.</p>
         """, unsafe_allow_html=True)
     with col2:
-        if animations["about"]:
-            st_lottie(animations["about"], height=280, key="about")
-        else:
-            st.error("⚠️ About animation failed to load.")
+        if lottie_about:
+            st_lottie(lottie_about, height=280, key="about")
 
 # --- Projects Section ---
 with st.container():
@@ -84,17 +74,14 @@ with st.container():
         </ul>
         """, unsafe_allow_html=True)
     with col2:
-        if animations["projects"]:
-            st_lottie(animations["projects"], height=300, key="projects")
-        else:
-            st.error("⚠️ Projects animation failed to load.")
+        if lottie_projects:
+            st_lottie(lottie_projects, height=300, key="projects")
 
 # --- Gemini Chatbot Section ---
 with st.container():
     st.write("---")
     st.markdown("<h2>💬 Ask Me Anything (Chatbot)</h2>", unsafe_allow_html=True)
     st.caption("Ask about Sahil’s background, achievements, and journey.")
-
     col1, col2 = st.columns([1, 1])
     with col1:
         user_input = st.text_input("Type your question here:")
@@ -120,17 +107,13 @@ User asked: {user_input}
                 except Exception as e:
                     st.error(f"❌ AI response failed: {e}")
     with col2:
-        if animations["chatbot"]:
-            st_lottie(animations["chatbot"], height=280, key="chat")
-        else:
-            st.error("⚠️ Chatbot animation failed to load.")
+        if lottie_chatbot:
+            st_lottie(lottie_chatbot, height=280, key="chat")
 
 # --- Footer ---
 with st.container():
     st.write("---")
     st.markdown("<h2>✨ Thanks for Visiting!</h2>", unsafe_allow_html=True)
     st.write("This portfolio is built with Python, Streamlit, and love for innovation.")
-    if animations["footer"]:
-        st_lottie(animations["footer"], height=200, key="footer")
-    else:
-        st.error("⚠️ Footer animation failed to load.")
+    if lottie_footer:
+        st_lottie(lottie_footer, height=200, key="footer")
