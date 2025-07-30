@@ -4,7 +4,7 @@ import requests
 import google.generativeai as genai
 
 # --- Page Config ---
-st.set_page_config(page_title="Sahil's Portfolio", page_icon="🚀", layout="wide")
+st.set_page_config(page_title="Sahil Desai | Portfolio", layout="wide", page_icon="💼")
 
 # --- Gemini API Key (Do Not Edit This Block) ---
 try:
@@ -14,73 +14,106 @@ except Exception as e:
     st.error(f"Gemini API Key error: {e}")
     model = None
 
-# --- Function to Load Lottie Animation ---
-def load_lottie_url(url: str):
+# --- Lottie Animation Loader ---
+def load_lottie_url(url):
     try:
         r = requests.get(url)
-        if r.status_code != 200:
-            return None
-        return r.json()
-    except Exception:
+        if r.status_code == 200:
+            return r.json()
+    except:
         return None
+    return None
 
-# --- Load Animations ---
-lottie_hero = load_lottie_url("https://assets10.lottiefiles.com/packages/lf20_touohxv0.json")
-lottie_about = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_gnb2nzzr.json")
-lottie_projects = load_lottie_url("https://assets5.lottiefiles.com/packages/lf20_u4yrau.json")
-lottie_chatbot = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_0yfsb3a1.json")
-lottie_footer = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_3rwasyjy.json")
+# --- Lottie Animations ---
+lottie_hero = load_lottie_url("https://assets10.lottiefiles.com/packages/lf20_touohxv0.json")  # Rocket launch
+lottie_about = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_gnb2nzzr.json")   # Developer
+lottie_projects = load_lottie_url("https://assets5.lottiefiles.com/packages/lf20_u4yrau.json")  # Projects
+lottie_chatbot = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_0yfsb3a1.json")  # Chatbot
+lottie_footer = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_3rwasyjy.json")   # Thank you
 
 # --- Hero Section ---
 with st.container():
-    st.subheader("Hi, I am Sahil Desai :wave:")
-    st.title("A Student, Developer & Innovator")
-    st.write("I am passionate about building projects that blend AI, electronics, and code.")
-    if lottie_hero:
-        st_lottie(lottie_hero, height=300, key="hero")
-    else:
-        st.warning("⚠️ Hero animation failed to load.")
+    col1, col2 = st.columns([1.5, 1])
+    with col1:
+        st.markdown("""
+        <h1 style='font-size: 50px;'>Hey, I'm <span style='color:#FF4B4B;'>Sahil Desai</span> 👋</h1>
+        <h3 style='margin-top:-15px;'>2nd Year BTech EXTC | VJTI Mumbai</h3>
+        <p style='font-size:18px;'>🚀 Exploring Embedded Systems, Data Science, and AI.</p>
+        """, unsafe_allow_html=True)
+    with col2:
+        if lottie_hero:
+            st_lottie(lottie_hero, height=280, key="hero")
 
-# --- About Section ---
+# --- About Me ---
 with st.container():
     st.write("---")
-    st.header("About Me")
-    st.write("I am a second-year EXTC student at VJTI, passionate about AI, embedded systems, and data science.")
-    if lottie_about:
-        st_lottie(lottie_about, height=300, key="about")
-    else:
-        st.warning("⚠️ About animation failed to load.")
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        st.markdown("""
+        <h2>🧠 About Me</h2>
+        <p style='font-size:17px;'>I'm a tech enthusiast passionate about building real-world solutions with Embedded Systems and Python.</p>
+        <p style='font-size:17px;'>From robotics to OpenCV to data visualizations on the web, I love to blend creativity and code.</p>
+        <p style='font-size:17px;'>Currently learning DSA and Data Science to prepare for software internships.</p>
+        """, unsafe_allow_html=True)
+    with col2:
+        if lottie_about:
+            st_lottie(lottie_about, height=280, key="about")
 
 # --- Projects Section ---
 with st.container():
     st.write("---")
-    st.header("My Projects")
-    st.write("- Smart Distance Monitoring System using ESP32\n- Face-based Proxy Detection System\n- Driver Drowsiness Detection\n- Data Science Roadmap and Visualizations")
-    if lottie_projects:
-        st_lottie(lottie_projects, height=300, key="projects")
-    else:
-        st.warning("⚠️ Projects animation failed to load.")
+    st.markdown("<h2>🛠️ Projects</h2>", unsafe_allow_html=True)
+    col1, col2 = st.columns([1.2, 1])
+    with col1:
+        st.markdown("""
+        <ul style='font-size:17px;'>
+        <li>🤖 <b>Self-balancing Robot</b> using ESP32 and MPU6050</li>
+        <li>🚗 <b>Wi-Fi Controlled Car</b> with ESP32 and live camera</li>
+        <li>📊 <b>Smart Distance Monitoring</b> system with OLED + Chart.js</li>
+        <li>✋ <b>Handwriting Recognition for Kids</b> using OpenCV + Voice</li>
+        </ul>
+        """, unsafe_allow_html=True)
+    with col2:
+        if lottie_projects:
+            st_lottie(lottie_projects, height=300, key="projects")
 
-# --- Chatbot Section ---
+# --- Gemini Chatbot Section ---
 with st.container():
     st.write("---")
-    st.header("Ask My AI Chatbot")
-    user_prompt = st.text_input("Ask anything about me or my work:")
-    if user_prompt and model:
-        response = model.generate_content(user_prompt)
-        st.success(response.text)
-    elif user_prompt:
-        st.error("Gemini model not loaded.")
-    if lottie_chatbot:
-        st_lottie(lottie_chatbot, height=300, key="chatbot")
-    else:
-        st.warning("⚠️ Chatbot animation failed to load.")
+    st.markdown("<h2>💬 Ask Me Anything (Chatbot)</h2>", unsafe_allow_html=True)
+    st.caption("Ask about Sahil’s background, achievements, and journey.")
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        user_input = st.text_input("Type your question here:")
+        if user_input and model:
+            with st.spinner("Thinking..."):
+                prompt = f"""
+You are an AI assistant for Sahil Desai's portfolio. Only reveal personal background info if asked directly.
+
+PRIVATE INFO (DO NOT reveal unless specifically asked):
+- Was a JEE dropper in 2023
+- Scored ~98 percentile in JEE Mains (2023, 2024), not qualified JEE Advanced
+- Got 99.09 percentile in MHT-CET
+- Admitted to VJTI via Defense Quota in 2024
+- 8.22 CGPA in first year
+- Allotted D-Block hostel on merit
+- Had a girlfriend in 12th (keep name private)
+
+User asked: {user_input}
+"""
+                try:
+                    response = model.generate_content(prompt)
+                    st.success(response.text)
+                except Exception as e:
+                    st.error(f"❌ AI response failed: {e}")
+    with col2:
+        if lottie_chatbot:
+            st_lottie(lottie_chatbot, height=280, key="chat")
 
 # --- Footer ---
 with st.container():
     st.write("---")
-    st.write("Connect with me on [GitHub](https://github.com/) | [LinkedIn](https://www.linkedin.com/)")
+    st.markdown("<h2>✨ Thanks for Visiting!</h2>", unsafe_allow_html=True)
+    st.write("This portfolio is built with Python, Streamlit, and love for innovation.")
     if lottie_footer:
-        st_lottie(lottie_footer, height=150, key="footer")
-    else:
-        st.warning("⚠️ Footer animation failed to load.")
+        st_lottie(lottie_footer, height=200, key="footer")
