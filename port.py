@@ -1,56 +1,37 @@
 import streamlit as st
+from streamlit_lottie import st_lottie
+import requests
 import google.generativeai as genai
 
-# Configure Gemini API key
+# Configure Gemini
 genai.configure(api_key="AIzaSyD_VwuOiXSi3k8ACj7lxvHN2h_wn14Wcg0")
 model = genai.GenerativeModel('gemini-1.5-flash')
 
-# ---- Custom CSS for dark mode ----
-st.markdown("""
-    <style>
-        .title {
-            color: #f1f1f1;
-            font-size: 40px;
-            font-weight: bold;
-        }
-        .subtitle {
-            color: #bbbbbb;
-            font-size: 22px;
-            margin-bottom: 20px;
-        }
-        .persona-box {
-            background-color: #1f1f1f;
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 20px;
-            font-size: 18px;
-            color: #dddddd;
-        }
-        .chat-box {
-            background-color: #2c2c2c;
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 20px;
-            box-shadow: 0 4px 6px rgba(255,255,255,0.05);
-            color: #f1f1f1;
-        }
-        .slider-label {
-            font-size: 18px;
-            font-weight: 600;
-            margin-top: 30px;
-            color: #dddddd;
-        }
-        .stTextInput > div > input {
-            background-color: #333;
-            color: white;
-        }
-        .stFileUploader label {
-            color: #dddddd;
-        }
-    </style>
-""", unsafe_allow_html=True)
+# Load Lottie animations
+def load_lottie_url(url):
+    r = requests.get(url)
+    if r.status_code != 200:
+        return None
+    return r.json()
 
-# ---- Persona text defined globally ----
+hello_anim = load_lottie_url("https://assets10.lottiefiles.com/packages/lf20_zrqthn6o.json")
+chatbot_anim = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_u25cckyh.json")
+skills_anim = load_lottie_url("https://assets9.lottiefiles.com/packages/lf20_myejiggj.json")
+
+# Header Section
+col1, col2 = st.columns(2)
+with col1:
+    st.subheader("Hello 👋")
+    st.title("I am Sahil Desai")
+    st.markdown("#### Second-Year B.Tech EXTC Student | VJTI Mumbai")
+    st.write("A Tech Explorer and Project Enthusiast.")
+with col2:
+    st.image("pimage.png", width=250)
+
+st_lottie(hello_anim, height=180)
+st.markdown("---")
+
+# Bio / Persona
 persona = """
 Sahil Desai – Tech Explorer & Project Enthusiast  
 Second-Year B.Tech Student | EXTC Branch | VJTI, Mumbai
@@ -68,34 +49,37 @@ and finding smart solutions on the fly. Be it a lab project or a self-initiated 
 focus, energy, and adaptability to everything I do.
 """
 
-# ---- Header Section ----
+# Chatbot Section
+st.markdown("## 🤖 I AM SAHIL's AI CHAT BOT")
+st_lottie(chatbot_anim, height=150)
+st.write("Ask anything about me:")
+
+user = st.text_input("Type your question here")
+if st.button("Submit"):
+    prompt = persona + "\n\n" + user
+    response = model.generate_content(prompt)
+    st.success(response.text)
+
+st.markdown("---")
+
+# Skills Section
+st.markdown("## 🧠 My Skills")
+st_lottie(skills_anim, height=160)
+
 col1, col2 = st.columns(2)
 with col1:
-    st.markdown('<div class="title">Hello 👋</div>', unsafe_allow_html=True)
-    st.markdown('<div class="subtitle">I am Sahil Desai</div>', unsafe_allow_html=True)
-
+    st.markdown("**Python**")
+    st.progress(80)
+    st.markdown("**Data Science**")
+    st.progress(70)
 with col2:
-    st.image("pimage.png", width=250)  # Make sure 'pimage.png' exists in the same folder
+    st.markdown("**DSA**")
+    st.progress(75)
+    st.markdown("**Embedded Systems**")
+    st.progress(65)
 
-# ---- AI Chat Section ----
-st.markdown('<div class="chat-box"><h3 style="color:white;">I AM SAHIL\'s AI CHAT BOT</h3><p>Ask anything about me 👇</p></div>', unsafe_allow_html=True)
+st.markdown("---")
 
-user = st.text_input("Type your question here:")
-if st.button("Submit", use_container_width=True):
-    prompt = f"{persona}\n\n{user}"
-    response = model.generate_content(prompt)
-    st.markdown(f'<div class="chat-box"><b>Answer:</b><br>{response.text}</div>', unsafe_allow_html=True)
-
-# ---- Persona Bio Section ----
-st.markdown(f'<div class="persona-box">{persona}</div>', unsafe_allow_html=True)
-
-# ---- Skills Section ----
-st.markdown('<div class="slider-label">My Skills</div>', unsafe_allow_html=True)
-st.slider("Python", 0, 100, 80)
-st.slider("Data Science", 0, 100, 70)
-st.slider("DSA", 0, 100, 75)
-st.slider("Embedded Systems", 0, 100, 65)
-
-# ---- File Uploader ----
-st.markdown('<div class="slider-label">Upload Your File</div>', unsafe_allow_html=True)
-st.file_uploader("Choose a file", type=["pdf", "docx", "txt", "jpg", "png"])
+# File Uploader
+st.markdown("## 📤 Upload Your File")
+st.file_uploader("Choose a file (pdf, image, docx)", type=["pdf", "jpg", "png", "docx"])
