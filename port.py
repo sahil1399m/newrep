@@ -6,9 +6,11 @@ import google.generativeai as genai
 # --- Page Config ---
 st.set_page_config(page_title="Sahil Desai | Portfolio", layout="wide", page_icon="💼")
 
+# --- Gemini AI Configuration ---
 genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 model = genai.GenerativeModel("gemini-1.5-flash")
-# --- Load Lottie Animation from URL ---
+
+# --- Load Lottie Animation ---
 def load_lottie_url(url):
     try:
         r = requests.get(url)
@@ -18,32 +20,25 @@ def load_lottie_url(url):
         return None
     return None
 
-# --- Lottie URLs ---
-lottie_hero = load_lottie_url("https://lottie.host/4aabcdb6-bb8b-4c10-8983-24e30e8bb2f5/Q6oRbbF7nP.json")
-lottie_about = load_lottie_url("https://lottie.host/0523d100-518b-4ff3-935e-f1be8fdf46a1/lAVJmCQlW1.json")
-lottie_projects = load_lottie_url("https://lottie.host/6079eea3-b2cb-4ac7-b8e1-41d5d192bd69/7DqEfHXbHF.json")
-lottie_chatbot = load_lottie_url("https://lottie.host/b87dbb7f-6659-49e1-84a6-4d2a9cbb9470/tOekMH4Ch9.json")
-lottie_footer = load_lottie_url("https://lottie.host/31c293e2-52f5-48c8-bc9c-1bfc8b716190/yiDXHLoWYb.json")
-
-#  --- CSS Styling ---
-# with open("style.css") as f:
-#     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+# --- Load Animations ---
+lottie_hero = load_lottie_url("https://lottie.host/0158db96-d68e-4661-bd5d-930d6e83bbd7/f1pyDv3Jc2.json")  # 🚀 Rocket
+lottie_about = load_lottie_url("https://lottie.host/b11a59b4-74c7-4d89-94a3-2c857c83b4ce/jIscw9MzZx.json")  # 👨‍💻 Programmer
+lottie_projects = load_lottie_url("https://lottie.host/99d16229-8826-4936-b6f0-e7f2e0485de1/2mt3OAb9H9.json")  # 📊 Data
+lottie_chatbot = load_lottie_url("https://lottie.host/b87dbb7f-6659-49e1-84a6-4d2a9cbb9470/tOekMH4Ch9.json")  # 🤖 Chatbot
+lottie_footer = load_lottie_url("https://lottie.host/97cb2d87-3d8e-4a8e-a6f2-e3832b04ad47/sXnDfyZBlq.json")  # 🌐 Globe
 
 # --- Hero Section ---
 with st.container():
-    col1, col2 = st.columns([1.2, 1])
+    col1, col2 = st.columns([1.5, 1])
     with col1:
         st.markdown("""
         <h1 style='font-size: 50px;'>Hey, I'm <span style='color:#FF4B4B;'>Sahil Desai</span> 👋</h1>
         <h3 style='margin-top:-15px;'>2nd Year BTech EXTC | VJTI Mumbai</h3>
         <p style='font-size:18px;'>🚀 Exploring Embedded Systems, Data Science, and AI.</p>
         """, unsafe_allow_html=True)
-        lottie_hero = load_lottie_url("https://lottie.host/4aabcdb6-bb8b-4c10-8983-24e30e8bb2f5/Q6oRbbF7nP.json")
-        lottie_chatbot = load_lottie_url("https://lottie.host/b87dbb7f-6659-49e1-84a6-4d2a9cbb9470/tOekMH4Ch9.json")
     with col2:
         if lottie_hero:
-            lottie_rocket = load_lottie_url("https://lottie.host/0158db96-d68e-4661-bd5d-930d6e83bbd7/f1pyDv3Jc2.json")
-            st_lottie(lottie_hero, height=300, key="hero")
+            st_lottie(lottie_hero, height=280, key="hero")
 
 # --- About Me Section ---
 with st.container():
@@ -58,7 +53,7 @@ with st.container():
         """, unsafe_allow_html=True)
     with col2:
         if lottie_about:
-            st_lottie(lottie_about, height=300, key="about")
+            st_lottie(lottie_about, height=280, key="about")
 
 # --- Projects Section ---
 with st.container():
@@ -83,7 +78,6 @@ with st.container():
     st.write("---")
     st.markdown("<h2>💬 Ask Me Anything (Chatbot)</h2>", unsafe_allow_html=True)
     st.caption("Ask about Sahil’s background, achievements, and journey.")
-
     col1, col2 = st.columns([1, 1])
     with col1:
         user_input = st.text_input("Type your question here:")
