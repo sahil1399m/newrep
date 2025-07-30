@@ -3,109 +3,94 @@ from streamlit_lottie import st_lottie
 import requests
 import google.generativeai as genai
 
-# Configure Gemini
-genai.configure(api_key="AIzaSyD_VwuOiXSi3k8ACj7lxvHN2h_wn14Wcg0")  # Replace with valid Gemini API key
-model = genai.GenerativeModel("gemini-1.5-flash")
+# Page Configuration
+st.set_page_config(page_title="Sahil's Portfolio", page_icon="🧑‍💻", layout="wide")
 
-# Load Lottie animation from a URL
+# Google Gemini API Key
+genai.configure(api_key="AIzaSyD_VwuOiXSi3k8ACj7lxvHN2h_wn14Wcg0")
+model = genai.GenerativeModel("gemini-pro")
+
+# Function to load Lottie animations
 def load_lottie_url(url):
     try:
         r = requests.get(url)
-        if r.status_code != 200:
-            return None
-        return r.json()
+        if r.status_code == 200:
+            return r.json()
     except:
         return None
 
-# Verified working Lottie URLs
-animations = {
-    "coding": "https://assets9.lottiefiles.com/packages/lf20_dcatp5cr.json",
-    "chatbot": "https://assets10.lottiefiles.com/packages/lf20_3rwasyjy.json",
-    "rocket": "https://assets1.lottiefiles.com/packages/lf20_qp1q7mct.json",
-    "upload": "https://assets2.lottiefiles.com/private_files/lf30_m6j5igxb.json",
-    "ai": "https://assets2.lottiefiles.com/packages/lf20_jtbfg2nb.json"
-}
+# Load Animations
+lottie_coding = load_lottie_url("https://lottie.host/4aabcdb6-bb8b-4c10-8983-24e30e8bb2f5/Q6oRbbF7nP.json")
+lottie_rocket = load_lottie_url("https://lottie.host/1ab9603f-4b3d-481e-bfa9-12fdc6a32d4b/5kVrZ0UBVm.json")
+lottie_chat = load_lottie_url("https://lottie.host/b87dbb7f-6659-49e1-84a6-4d2a9cbb9470/tOekMH4Ch9.json")
 
-# Load all animations
-lottie_coding = load_lottie_url(animations["coding"])
-lottie_chatbot = load_lottie_url(animations["chatbot"])
-lottie_rocket = load_lottie_url(animations["rocket"])
-lottie_upload = load_lottie_url(animations["upload"])
-lottie_ai = load_lottie_url(animations["ai"])
+# Header
+with st.container():
+    st.title("Hey, I'm Sahil 👋")
+    st.subheader("BTech EXTC Student at VJTI | Passionate about AI, Robotics & Software")
+    st.write("Welcome to my interactive portfolio built with Streamlit!")
 
-# Page setup
-st.set_page_config(page_title="Sahil Desai Portfolio", layout="wide")
-st.markdown("<h1 style='text-align: center;'>👨‍💻 Sahil Desai - Tech Explorer</h1>", unsafe_allow_html=True)
+# About Section
+with st.container():
+    st.write("---")
+    left_col, right_col = st.columns(2)
+    with left_col:
+        st.header("About Me")
+        st.write("""
+        I am an enthusiastic second-year Electronics and Telecommunication Engineering student at VJTI, Mumbai.
+        I love building tech projects with ESP32, OpenCV, and Data Science. I'm aiming for a software internship in my third year.
+        """)
+    with right_col:
+        st_lottie(lottie_coding, height=300, key="coding")
 
-# Top Section
-col1, col2 = st.columns(2)
-with col1:
-    st.subheader("Hello 👋")
-    st.title("I am Sahil Desai")
-    st.write("Second-Year B.Tech (EXTC) @ VJTI, Mumbai")
-    st.write("8.22 CGPA | D-Block Hostel | 2024 Defense Quota | JEE/CET Ranker")
-with col2:
-    st.image("pimage.png", use_container_width=True)
+# Projects
+with st.container():
+    st.write("---")
+    st.header("Projects 💡")
+    st.write("### Here are a few things I've worked on:")
+    st.markdown("- 🤖 **Self-balancing robot** with ESP32 + LVGL")
+    st.markdown("- 🚗 **WiFi-controlled smart car** with live video & servo")
+    st.markdown("- 📈 **Smart distance monitor** with web graph (Chart.js)")
+    st.markdown("- ✋ **OpenCV Kids App** — draws letters via hand & speaks using TTS")
 
-st.divider()
+# AI Chatbot Section
+with st.container():
+    st.write("---")
+    st.header("💬 Ask Me Anything (Chatbot)")
+    st.write("You can ask me questions about my journey, background, or projects.")
+    st_lottie(lottie_chat, height=250, key="chat")
 
-# About Me
-st.subheader("🚀 About Me")
-about_col1, about_col2 = st.columns([1, 1])
-with about_col1:
-    about_text = """
-    Passionate about building real-world tech projects. Whether it's OpenCV + ESP32, AI tools for kids,
-    or smart monitoring systems, I turn ideas into working systems.
+    user_input = st.text_input("Ask a question:")
+    if user_input:
+        with st.spinner("Thinking..."):
+            prompt = f"""
+You are an AI assistant for Sahil Desai's portfolio. Only reveal personal info when asked.
+Here’s private info you can use ONLY IF ASKED:
+- JEE dropper in 2023
+- ~98 percentile in JEE Mains (2023 & 2024), but did not qualify JEE Advanced
+- 99.09 percentile in MHT-CET PCM
+- Joined VJTI in 2024 via Defense Quota
+- CGPA: 8.22 in 1st year
+- Got hostel D-block seat on merit
+- Had a girlfriend in 12th (keep her name private)
 
-    I believe in learning by building and enjoy exploring DSA, Data Science, Embedded Systems, and Visualization.
+User asks: {user_input}
+"""
+            try:
+                response = model.generate_content(prompt)
+                st.markdown(response.text)
+            except Exception as e:
+                st.error("❌ AI failed to respond. Please try again.")
 
-    I was a JEE dropper in 2023, scored ~98 percentile, and later got 99.09 percentile in CET.
-    Now a proud VJTI student, scoring 8.22 CGPA in Year 1.
-    """
-    st.markdown(f"<div style='text-align: justify'>{about_text}</div>", unsafe_allow_html=True)
-with about_col2:
-    if lottie_rocket:
-        st_lottie(lottie_rocket, height=280, key="rocket")
+# Footer
+with st.container():
+    st.write("---")
+    st.header("🚀 Let's Connect")
+    st.write("Find me on:")
+    st.markdown("""
+- [LinkedIn](https://www.linkedin.com/in/YOUR_USERNAME)
+- [GitHub](https://github.com/YOUR_USERNAME)
+- [Email](mailto:your_email@example.com)
+""")
+    st_lottie(lottie_rocket, height=250, key="rocket")
 
-st.divider()
-
-# Chatbot
-st.subheader("🤖 I Am Sahil's AI Chatbot")
-chatbot_col1, chatbot_col2 = st.columns([1, 1])
-with chatbot_col1:
-    user = st.text_input("Ask me anything...")
-    if st.button("Submit"):
-        prompt = about_text + "\n" + user
-        response = model.generate_content(prompt)
-        st.success(response.text)
-with chatbot_col2:
-    if lottie_chatbot:
-        st_lottie(lottie_chatbot, height=280, key="chatbot")
-
-st.divider()
-
-# Skills
-st.subheader("📈 My Skills")
-skill_col1, skill_col2 = st.columns(2)
-with skill_col1:
-    st.slider("Python", 0, 100, 85)
-    st.slider("C/C++", 0, 100, 70)
-    st.slider("Data Structures", 0, 100, 75)
-    st.slider("Embedded Systems", 0, 100, 80)
-with skill_col2:
-    if lottie_ai:
-        st_lottie(lottie_ai, height=300, key="skills")
-
-st.divider()
-
-# File Upload
-st.subheader("📂 Upload a File")
-upload_col1, upload_col2 = st.columns([1, 2])
-with upload_col1:
-    if lottie_upload:
-        st_lottie(lottie_upload, height=150, key="upload")
-with upload_col2:
-    st.file_uploader("Upload your resume, image, or project files here")
-
-st.divider()
-st.caption("Made with ❤️ using Streamlit + Gemini | © Sahil Desai")
