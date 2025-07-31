@@ -53,7 +53,7 @@ def load_lottie_url(url):
 
 # --- Lottie Animations ---
 lottie_hero = load_lottie_url("https://assets10.lottiefiles.com/packages/lf20_touohxv0.json")  # Rocket launch
-lottie_about = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_gnb2nzzr.json")   # Developer
+lottie_about = load_lottie_url("https://lottie.host/3cc0d79c-4c72-43e9-b705-5c36d6a2067e/N0zPvo2fAx.json")
 lottie_projects = load_lottie_url("https://assets10.lottiefiles.com/packages/lf20_t0U27CsQcj.json")  # Projects
 lottie_chatbot = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_0yfsb3a1.json")  # Chatbot
 lottie_footer = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_3rwasyjy.json")   # Thank you
